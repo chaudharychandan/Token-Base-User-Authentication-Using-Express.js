@@ -30,12 +30,14 @@ exports.signup = function(req, res, next) {
       user.save(function(err) {
         if(err) { return next(err); }
 
-        res.json({ token: generateToken(user) });
+        res.send({ token: generateToken(user) });
       });
     });
   } catch (err) {
     next(err);
   }
-
-  // Respond to requesr indicating the user was created
 };
+
+exports.signin = function(req, res, next) {
+  res.send({ token: generateToken(req.user) });
+}
