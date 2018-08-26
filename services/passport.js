@@ -14,12 +14,12 @@ const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
   // verify this username and password
   User.findOne({ email }, (err, user) => {
     if (err) return done(err, false);
-    if(!user) return done(null, false);
+    if(!user) return done(null, false, { message: 'Incorrect email' });
 
     user.comparePassword(password, (err, isMatch) => {
       if(err) return done(err);
 
-      if(!isMatch) return done(null, false);
+      if(!isMatch) return done(null, false, { message: 'Incorrect password' });
 
       return done(null, user);
     });
